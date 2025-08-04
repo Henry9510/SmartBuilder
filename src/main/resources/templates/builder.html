@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+
+<body>
+
+    <!-- MENÚ SUPERIOR DE ARMADO DEL PROYECTO -->
+    <nav class="menu-proyecto">
+        <h2>Armado del Proyecto</h2>
+        <div class="opciones-menu">
+
+            <select id="tipoVehiculo">
+                <option value="">Seleccionar Tipo de Vehículo</option>
+                <option value="refueler">Refueller</option>
+                <option value="lavado">Carro Lavado</option>
+                <option value="agua">Carro de Agua</option>
+            </select>
+
+            <select id="capacidadTanque">
+                <option value="">Seleccionar Capacidad del Tanque</option>
+                <option value="2500">2500 galones</option>
+                <option value="3000">3000 galones</option>
+                <option value="5000">5000 galones</option>
+            </select>
+
+            <select id="tipoFiltro">
+                <option value="">Seleccionar Tipo de Filtro</option>
+                <option value="facet">Facet</option>
+                <option value="velcon">Velcon</option>
+            </select>
+
+            <select id="capacidadFiltro">
+                <option value="">Seleccionar Capacidad del Filtro</option>
+                <option value="50">50 GPM</option>
+                <option value="100">100 GPM</option>
+                <option value="300">300 GPM</option>
+            </select>
+
+            <select id="accionamientoCarretel">
+                <option value="">Seleccionar Tipo de Accionamiento del Carretel</option>
+                <option value="12v">12V</option>
+                <option value="hidraulico">Hidráulico</option>
+                <option value="neumatico">Neumático</option>
+            </select>
+
+            <select id="capacidadCarretel">
+                <option value="">Seleccionar Capacidad del Carretel</option>
+                <option value="50ft">Manguera de 50 ft</option>
+                <option value="75ft">Manguera de 75 ft</option>
+                <option value="100ft">Manguera de 100 ft</option>
+            </select>
+
+            <select id="capacidadVenturi">
+                <option value="">Seleccionar Capacidad del Venturi</option>
+                <option value="1in">1” - Bajo caudal</option>
+                <option value="1_5in">1.5” - Medio caudal</option>
+                <option value="2in">2” - Alto caudal</option>
+            </select>
+
+        </div>
+    </nav>
+
+
+    <button id="btnGenerarMateriales">Generar Lista de Materiales</button>
+    </div>
+    </nav>
+
+    <!-- SECCIÓN DE LISTADO DE INSUMOS -->
+    <section class="tables">
+        <h2>Lista de Insumos Almacenados</h2>
+
+        <table id="tablaInsumos">
+            <thead>
+                <tr>
+                    <th colspan="10">Lista de Materiales</th>
+                </tr>
+                <tr>
+                    <th>Ubicación</th>
+                    <th>Código</th>
+                    <th>Descripción</th>
+                    <th>Número de Parte</th>
+                    <th>Procedencia</th>
+                    <th>Unidad</th>
+                    <th>Categoría</th>
+                    <th>Stock</th>
+                    <th colspan="2">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Las filas se llenan con JS según el proyecto seleccionado -->
+            </tbody>
+        </table>
+    </section>
+
+
+
+</body>
+
+</html>
