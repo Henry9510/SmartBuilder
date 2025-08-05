@@ -1,5 +1,6 @@
 package com.garsite.SmartBuilder.Model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,14 +15,20 @@ import lombok.Setter;
 @Table(name = "venturi")
 public class Venturi {
 
-     @Id
+ 
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo_venturi;
+    private Long id; 
+    
+    @Column(name = "codigo", unique = true)
+    private String codigo; 
 
-    private String numero_parte;
-    private String nombre;
+    @Column(name = "numero_parte")
+    private String numeroParte;
 
+    @Column(name = "descripcion", columnDefinition = "TEXT")
+    private String descripcion;
 
-
-
+    @Column(name = "flujo_maximo")
+    private Integer maxFlow; 
 }
