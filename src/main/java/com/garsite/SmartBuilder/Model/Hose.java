@@ -8,25 +8,20 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
+
 @Getter
 @Setter
-@Table(name = "filtros")
-public class Filtros {
-
+@Entity
+@Table(name = "hoses")
+public class Hose {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo_filtro;
-
-    private String caudal;
-    private String tipoFiltro;
-    private String tipoMaterial;    
-    private String tipoMontaje;
-    private String tipoConexiones;
-    private String numeroParte;
-    private String nombre;
-    private String diferenciaPresion;
-    
+    private Long codigo_reel;
+    private String material;
+    private String tipoManguera;
+    private String diametro;
+    private String longitud;
+    private String conexion;
 
 }

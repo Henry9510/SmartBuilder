@@ -8,21 +8,25 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
-@Getter
+
+
 @Setter
-@Table(name = "hosere_reels")
-public class Carretel {
+@Getter
+@Entity
+@Table(name = "sistem_ele") 
+public class SistemEle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo_reel;
+    private Long id;
 
-    private String numeroParte;
-    private String nombre;
-    private String capacidaManguera;
-    private String tipoManguera;
-    private String rebobinado;
-    private String medidas;
+    private String voltaje;
+    private String tipoControl;
+    private String tipoSensorWD;
+    private String tipoSensorTemp;          
+    private String tipoMedidor;
+    private String impresora;
+    private String moden;
 
+    
 }

@@ -16,4 +16,9 @@ public class main {
     public String indexPage() {
         return "index"; 
     }
+
+     @GetMapping("/builder")
+    public String build() {
+        return "builder"; 
+    }
 }

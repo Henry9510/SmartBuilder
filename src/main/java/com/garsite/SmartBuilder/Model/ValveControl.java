@@ -11,22 +11,23 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "filtros")
-public class Filtros {
+@Table(name = "valve_control")
+public class ValveControl {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo_filtro;
+    private Long id;
 
-    private String caudal;
-    private String tipoFiltro;
-    private String tipoMaterial;    
-    private String tipoMontaje;
-    private String tipoConexiones;
+
+    private String tipoConexion;
     private String numeroParte;
     private String nombre;
-    private String diferenciaPresion;
-    
+    private String capacidadFlujo;
+    private String tipoValvula;         
+    private String tipoAcionamiento;
+
+
+
 
 }

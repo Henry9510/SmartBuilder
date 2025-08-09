@@ -36,7 +36,7 @@ public class venturiController {
     @GetMapping
     public List<Venturi> listarVenturis() {
         return venturiRepository.findAll();
-        
+
     }
 
     // Buscar por ID
