@@ -5,7 +5,7 @@
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Page Title</title>
- 
+
 </head>
 
 <body>
@@ -17,9 +17,6 @@
 
             <select id="tipoVehiculo">
                 <option value="">Seleccionar Tipo de Vehículo</option>
-                <option value="refueler">Refueller</option>
-                <option value="lavado">Carro Lavado</option>
-                <option value="agua">Carro de Agua</option>
             </select>
 
             <select id="capacidadTanque">
@@ -31,8 +28,6 @@
 
             <select id="tipoFiltro">
                 <option value="">Seleccionar Tipo de Filtro</option>
-                <option value="facet">Facet</option>
-                <option value="velcon">Velcon</option>
             </select>
 
             <select id="capacidadFiltro">
@@ -100,40 +95,112 @@
 </body>
 <script>
 
-  window.addEventListener('DOMContentLoaded', () => {
-            let listaVenturis = [];
+    window.addEventListener('DOMContentLoaded', () => {
+        let listaVenturis = [];
+        let listaChasis = [];
+        let listaFiltros = [];
 
-            const obtenerVenturis = async () => {
-                try {
-                    const respuesta = await fetch('http://localhost:8080/api/venturi');
-                    if (!respuesta.ok) throw new Error('Error al obtener venturis');
-                    listaVenturis = await respuesta.json();
-                    poblarSelectVenturis();
-                } catch (error) {
-                    console.error('Error:', error);
-                    alert('Ocurrió un error al obtener las capacidades del venturi.');
-                }
-            };
+        const obtenerVenturis = async () => {
+            try {
+                const respuesta = await fetch('http://localhost:8080/api/venturi');
+                if (!respuesta.ok) throw new Error('Error al obtener venturis');
+                listaVenturis = await respuesta.json();
+                poblarSelectVenturis();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Ocurrió un error al obtener las capacidades del venturi.');
+            }
+        };
 
-            const poblarSelectVenturis = () => {
-                const venturiSelect = document.getElementById('capacidadVenturi');
-                venturiSelect.innerHTML = '';
+        const poblarSelectVenturis = () => {
+            const venturiSelect = document.getElementById('capacidadVenturi');
+            venturiSelect.innerHTML = '';
 
-                const opcionDefault = document.createElement('option');
-                opcionDefault.value = '';
-                opcionDefault.textContent = 'Seleccione una capacidad del Venturi';
-                venturiSelect.appendChild(opcionDefault);
+            const opcionDefault = document.createElement('option');
+            opcionDefault.value = '';
+            opcionDefault.textContent = 'Seleccione una capacidad del Venturi';
+            venturiSelect.appendChild(opcionDefault);
 
-                listaVenturis.forEach(venturi => {
-                    const option = document.createElement('option');
-                    option.value = venturi.codigo;
-                    option.textContent = venturi.descripcion;
-                    venturiSelect.appendChild(option);
-                });
-            };
+            listaVenturis.forEach(venturi => {
+                const option = document.createElement('option');
+                option.value = venturi.codigo;
+                option.textContent = venturi.descripcion;
+                venturiSelect.appendChild(option);
+            });
+        };
 
-            obtenerVenturis();
-        });
+        const obtenerChasis = async () => {
+            try {
+                const respuesta = await fetch('http://localhost:8080/api/chasis');
+                if (!respuesta.ok) throw new Error('Error al obtener chasis');
+                listaChasis = await respuesta.json();
+                poblarSelectChasis();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Ocurrió un error al obtener las capacidades del venturi.');
+            }
+        };
+
+        const poblarSelectChasis = () => {
+            const chasisSelect = document.getElementById('tipoVehiculo');
+            chasisSelect.innerHTML = '';
+
+            const opcionDefault = document.createElement('option');
+            opcionDefault.value = '';
+            opcionDefault.textContent = 'Seleccione un tipo de chasis';
+            chasisSelect.appendChild(opcionDefault);
+
+
+
+            listaChasis.forEach(chasis => {
+                const option = document.createElement('option');
+                option.value = chasis.id;
+                option.textContent = chasis.nombre;
+                chasisSelect.appendChild(option);
+            });
+        };
+
+        
+        const obtenerFiltro = async () => {
+            try {
+                const respuesta = await fetch('http://localhost:8080/api/filtros');
+                if (!respuesta.ok) throw new Error('Error al obtener filtros');
+                listaFiltros = await respuesta.json();
+                poblarSelectFiltros();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Ocurrió un error al obtener filtros.');
+            }
+        };
+
+        const poblarSelectFiltros = () => {
+            const filtroSelect = document.getElementById('tipoFiltro');
+            filtroSelect.innerHTML = '';
+
+            const opcionDefault = document.createElement('option');
+            opcionDefault.value = '';
+            opcionDefault.textContent = 'Seleccione un filtro';
+            filtroSelect.appendChild(opcionDefault);
+
+            listaFiltros.forEach(filtro => {
+                const option = document.createElement('option');
+                option.value = filtro.codigoFiltro; // ID del filtro
+                option.textContent = filtro.nombre; // Nombre del filtro
+                filtroSelect.appendChild(option);
+            });
+        };
+
+
+
+        // Llamadas a las funciones para obtener datos al cargar la página
+
+        obtenerVenturis();
+        obtenerChasis();
+        obtenerFiltro();
+
+
+
+    });
 
 
 </script>

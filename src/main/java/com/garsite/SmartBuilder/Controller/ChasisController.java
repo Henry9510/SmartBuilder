@@ -49,6 +49,7 @@ public class ChasisController {
     public ResponseEntity<Chasis> update(@PathVariable Long id, @RequestBody Chasis chasisDetails) {
         return chasisRepository.findById(id)
                 .map(chasis -> {
+                    chasis.setNombre(chasisDetails.getNombre());
                     chasis.setTipo(chasisDetails.getTipo());
                     chasis.setMaterial(chasisDetails.getMaterial());
                     chasis.setDimensiones(chasisDetails.getDimensiones());

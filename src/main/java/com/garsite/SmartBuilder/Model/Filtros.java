@@ -17,7 +17,7 @@ public class Filtros {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo_filtro;
+    private Long codigoFiltro;
 
     private String caudal;
     private String tipoFiltro;
