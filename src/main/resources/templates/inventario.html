@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Inventario</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root{
+      --bg:#f5f7fb; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0;
+      --card:#fff; --brand:#2563eb; --sheet:1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,"Noto Sans",sans-serif}
+    /* Top nav (respetando tu base) */
+    nav.top{background:#333; padding:10px; margin-bottom:20px}
+    nav.top a{color:#fff; text-decoration:none; margin-right:15px; font-weight:bold}
+    nav.top a:hover{text-decoration:underline}
+
+    .page{max-width:var(--sheet); margin:20px auto; padding:0 16px}
+    .header{font-size:1.8rem; margin:10px 0 0}
+    .tools{display:flex; gap:.5rem; align-items:center; margin:12px 0 6px; flex-wrap:wrap}
+    .tools input[type="search"], .tools select{padding:.5rem .6rem; border:1px solid var(--line); border-radius:.5rem; background:#fff}
+    .btn{border:1px solid var(--line); background:#fff; padding:.5rem .8rem; border-radius:.5rem; cursor:pointer; font-weight:700}
+    .btn.primary{background:var(--brand); color:#fff; border-color:transparent}
+    .status{color:var(--muted); margin-left:auto}
+
+    .card{background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:0 12px 28px rgba(15,23,42,.08); overflow:hidden}
+    .card h2{margin:0; padding:12px 14px; border-bottom:1px solid var(--line); font-size:1.05rem}
+
+    table{width:100%; border-collapse:collapse}
+    th,td{border-bottom:1px solid var(--line); padding:10px; text-align:left; vertical-align:top}
+    thead th{background:#f8fafc; font-weight:800}
+    tbody tr:nth-child(even){background:#fcfdff}
+    tbody tr:hover{background:#f1f6ff}
+
+    .pager{display:flex; gap:.5rem; align-items:center; justify-content:flex-end; margin-top:10px}
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body>
+  <!-- NAV (tu base) -->
+  <nav class="top">
+    <a href="/index">Inicio</a>
+    <a href="/inventario">Inventario</a>
+    <a href="/productos">Productos</a>
+    <a href="/categorias">Categorías</a>
+    <a href="/usuarios">Usuarios</a>
+  </nav>
+
+  <main class="page">
+    <div class="header">Inventario</div>
+
+    <!-- Herramientas -->
+    <div class="tools">
+      <input id="q" type="search" placeholder="Buscar (código, número de parte, modelo…)" />
+      <select id="size">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+      </select>
+      <button id="buscar" class="btn">Buscar</button>
+      <span id="status" class="status"></span>
+    </div>
+
+    <!-- Tabla -->
+    <section class="card">
+      <h2>Listado</h2>
+      <table id="tabla">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Código (codigoInsumo)</th>
+            <th>Número de parte</th>
+            <th>Descripción</th>
+            <th>Modelo</th>
+            <th>Unidad</th>
+            <th>Opciones</th>
+          </tr>
+        </thead>
+        <tbody><!-- filas JS --></tbody>
+      </table>
+    </section>
+
+    <!-- Paginación -->
+    <div class="pager">
+      <button id="prev" class="btn">Anterior</button>
+      <span id="info" class="muted"></span>
+      <button id="next" class="btn">Siguiente</button>
+    </div>
+  </main>
+
+  <script>
+  (()=>{
+    "use strict";
+    const API = "http://localhost:8080/api/insumos"; // ajusta si aplica
+
+    // UI refs
+    const ui = {
+      q: document.getElementById("q"),
+      size: document.getElementById("size"),
+      buscar: document.getElementById("buscar"),
+      status: document.getElementById("status"),
+      tbody: document.querySelector("#tabla tbody"),
+      prev: document.getElementById("prev"),
+      next: document.getElementById("next"),
+      info: document.getElementById("info"),
+    };
+
+    const state = { q:"", page:0, size:20, sort:"id,asc" };
+    let aborter = null;
+
+    function setStatus(t){ ui.status.textContent = t || ""; }
+    function T(v){ return (v ?? "").toString(); }
+
+    function renderRows(items){
+      ui.tbody.innerHTML = "";
+      if(!items || !items.length){
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 7; td.textContent = "Sin resultados.";
+        tr.appendChild(td); ui.tbody.appendChild(tr);
+        return;
+      }
+      const frag = document.createDocumentFragment();
+      for(const it of items){
+        const tr = document.createElement("tr");
+        const cols = [
+          it.id, it.codigoInsumo, it.numero_parte, it.descripcion, it.modelo, it.unidad_medida
+        ];
+        for(const c of cols){
+          const td = document.createElement("td");
+          td.textContent = T(c) || "-";
+          tr.appendChild(td);
+        }
+        const tdOps = document.createElement("td");
+        const btn = document.createElement("button");
+        btn.className = "btn";
+        btn.textContent = "Ver";
+        btn.addEventListener("click", ()=> alert(JSON.stringify(it, null, 2)));
+        tdOps.appendChild(btn);
+        tr.appendChild(tdOps);
+        frag.appendChild(tr);
+      }
+      ui.tbody.appendChild(frag);
+    }
+
+    function renderPager(page){
+      const n = (page.number ?? 0) + 1;
+      const total = page.totalPages ?? 1;
+      ui.info.textContent = `Página ${n} de ${total} • ${page.totalElements ?? 0} elementos`;
+      ui.prev.disabled = page.first === true;
+      ui.next.disabled = page.last === true;
+    }
+
+    async function load(){
+      // cancelación
+      if (aborter) aborter.abort();
+      aborter = new AbortController();
+
+      const params = new URLSearchParams({
+        q: state.q,
+        page: state.page,
+        size: state.size,
+        sort: state.sort
+      });
+
+      try{
+        setStatus("Cargando…");
+        const res = await fetch(`${API}?${params.toString()}`, { signal: aborter.signal });
+        if(!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+        const data = await res.json(); // Page<Insumos>
+        renderRows(data.content);
+        renderPager(data);
+        setStatus("");
+      }catch(err){
+        if (err.name === "AbortError") return;
+        console.error(err);
+        setStatus("Error al cargar. Verifica backend o CORS.");
+        ui.tbody.innerHTML = "<tr><td colspan='7'>No se pudo cargar.</td></tr>";
+        ui.info.textContent = "";
+      }
+    }
+
+    // eventos
+    ui.buscar.addEventListener("click", ()=>{
+      state.q = ui.q.value.trim();
+      state.page = 0; load();
+    });
+    ui.size.addEventListener("change", ()=>{
+      state.size = parseInt(ui.size.value,10) || 20;
+      state.page = 0; load();
+    });
+    ui.prev.addEventListener("click", ()=>{
+      if (state.page > 0){ state.page--; load(); }
+    });
+    ui.next.addEventListener("click", ()=>{
+      state.page++; load();
+    });
+    ui.q.addEventListener("keydown", e=>{
+      if(e.key === "Enter"){ e.preventDefault(); ui.buscar.click(); }
+    });
+
+    // primera carga
+    load();
+  })();
+  </script>
+</body>
+</html>

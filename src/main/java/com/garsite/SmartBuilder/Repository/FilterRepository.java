@@ -4,9 +4,10 @@ import com.garsite.SmartBuilder.Model.Filtros;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 
-
+@Repository
 public interface FilterRepository extends JpaRepository <Filtros, Long> {
     
     // Buscar por nombre (contiene, sin importar mayúsculas)

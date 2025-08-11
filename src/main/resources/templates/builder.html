@@ -1,210 +1,149 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Armado del Proyecto</title>
+    <link rel="stylesheet" href="/css/builderStyle.css" />
 </head>
 
 <body>
+    <!-- Menú de navegación principal -->
+    <header class="topbar">
+        <div class="wrap">
+            <div class="brand"><span class="logo">App</span> <span>— Órdenes</span></div>
+            <nav class="main-nav" aria-label="principal">
+                <a href="/index">Inicio</a>
+                <a href="#">Órdenes</a>
+                <a href="#">Inventario</a>
+                <a href="#">Configuración</a>
+            </nav>
+            <div>
+                <button class="btn mini" id="btnNuevaOT" title="Nueva Orden">+ Nueva OT</button>
+            </div>
+        </div>
+    </header>
 
-    <!-- MENÚ SUPERIOR DE ARMADO DEL PROYECTO -->
-    <nav class="menu-proyecto">
+    <!-- MENÚ SUPERIOR DE ARMADO DEL PROYECTO (vertical y por pasos) -->
+    <nav class="menu-proyecto" aria-label="Armado del Proyecto">
         <h2>Armado del Proyecto</h2>
-        <div class="opciones-menu">
 
-            <select id="tipoVehiculo">
-                <option value="">Seleccionar Tipo de Vehículo</option>
-            </select>
+        <form id="formArmado" class="wizard form-like" novalidate>
+            <!-- Paso 1: Chasis -->
+            <fieldset class="group" id="grp-chasis">
+                <legend>1) Chasis</legend>
+                <div class="subgroup">
+                    <label for="tipoVehiculo" class="label">Tipo de Vehículo / Chasis</label>
+                    <select id="tipoVehiculo">
+                        <option value="">Seleccionar tipo de chasis</option>
+                        <option value="NA">No aplica</option>
+                    </select>
+                </div>
+            </fieldset>
 
-            <select id="capacidadTanque">
-                <option value="">Seleccionar Capacidad del Tanque</option>
-                <option value="2500">2500 galones</option>
-                <option value="3000">3000 galones</option>
-                <option value="5000">5000 galones</option>
-            </select>
+            <!-- Paso 2: Tanque (habilita tras elegir chasis o N/A) -->
+            <fieldset class="group" id="grp-tanque">
+                <legend>2) Tanque</legend>
+                <div class="subgroup">
+                    <label for="capacidadTanque" class="label">Capacidad del Tanque</label>
+                    <select id="capacidadTanque" disabled>
+                        <option value="">Seleccionar capacidad</option>
+                        <option value="NA">No aplica</option>
+                        <option value="2500">2500 galones</option>
+                        <option value="3000">3000 galones</option>
+                        <option value="5000">5000 galones</option>
+                    </select>
+                </div>
+            </fieldset>
 
-            <select id="tipoFiltro">
-                <option value="">Seleccionar Tipo de Filtro</option>
-            </select>
+            <!-- Paso 3: Módulo (Filtro → Carretel → Venturi) -->
+            <fieldset class="group" id="grp-modulo">
+                <legend>3) Módulo</legend>
+                <div class="subgroup">
+                    <label for="tipoFiltro" class="label">Filtro (tipo)</label>
+                    <select id="tipoFiltro" disabled>
+                        <option value="">Seleccionar tipo de filtro</option>
+                        <option value="NA">No aplica</option>
+                    </select>
+                </div>
+                <div class="subgroup">
+                    <label for="capacidadFiltro" class="label">Filtro (capacidad)</label>
+                    <select id="capacidadFiltro" disabled>
+                        <option value="">Seleccionar capacidad de filtro</option>
+                        <option value="NA">No aplica</option>
+                        <option value="50">50 GPM</option>
+                        <option value="100">100 GPM</option>
+                        <option value="300">300 GPM</option>
+                    </select>
+                </div>
+                <div class="subgroup">
+                    <label for="accionamientoCarretel" class="label">Carretel (accionamiento)</label>
+                    <select id="accionamientoCarretel" disabled>
+                        <option value="">Seleccionar accionamiento</option>
+                        <option value="NA">No aplica</option>
+                        <option value="12v">12V</option>
+                        <option value="hidraulico">Hidráulico</option>
+                        <option value="neumatico">Neumático</option>
+                    </select>
+                </div>
+                <div class="subgroup">
+                    <label for="capacidadCarretel" class="label">Carretel (capacidad)</label>
+                    <select id="capacidadCarretel" disabled>
+                        <option value="">Seleccionar capacidad de carretel</option>
+                        <option value="NA">No aplica</option>
+                        <option value="50ft">Manguera de 50 ft</option>
+                        <option value="75ft">Manguera de 75 ft</option>
+                        <option value="100ft">Manguera de 100 ft</option>
+                    </select>
+                </div>
+                <div class="subgroup">
+                    <label for="capacidadVenturi" class="label">Venturi</label>
+                    <select id="capacidadVenturi" disabled>
+                        <option value="">Seleccionar venturi</option>
+                        <option value="NA">No aplica</option>
+                    </select>
+                </div>
+            </fieldset>
+        </form>
 
-            <select id="capacidadFiltro">
-                <option value="">Seleccionar Capacidad del Filtro</option>
-                <option value="50">50 GPM</option>
-                <option value="100">100 GPM</option>
-                <option value="300">300 GPM</option>
-            </select>
-
-            <select id="accionamientoCarretel">
-                <option value="">Seleccionar Tipo de Accionamiento del Carretel</option>
-                <option value="12v">12V</option>
-                <option value="hidraulico">Hidráulico</option>
-                <option value="neumatico">Neumático</option>
-            </select>
-
-            <select id="capacidadCarretel">
-                <option value="">Seleccionar Capacidad del Carretel</option>
-                <option value="50ft">Manguera de 50 ft</option>
-                <option value="75ft">Manguera de 75 ft</option>
-                <option value="100ft">Manguera de 100 ft</option>
-            </select>
-
-            <select id="capacidadVenturi">
-                <option value="">Seleccionar venturi</option>
-            </select>
-
+        <div class="bar-actions">
+            <button id="btnGenerarMateriales" class="btn primary" disabled>Generar Lista de Materiales</button>
+            <button id="btnReintentar" class="btn ghost" hidden>Reintentar carga</button>
+            <span id="estadoCarga" class="status" role="status" aria-live="polite"></span>
         </div>
     </nav>
 
-
-    <button id="btnGenerarMateriales">Generar Lista de Materiales</button>
-    </div>
-    </nav>
-
     <!-- SECCIÓN DE LISTADO DE INSUMOS -->
-    <section class="tables">
-        <h2>Lista de Insumos Almacenados</h2>
-
-        <table id="tablaInsumos">
-            <thead>
-                <tr>
-                    <th colspan="10">Lista de Materiales</th>
-                </tr>
-                <tr>
-                    <th>Ubicación</th>
-                    <th>Código</th>
-                    <th>Descripción</th>
-                    <th>Número de Parte</th>
-                    <th>Procedencia</th>
-                    <th>Unidad</th>
-                    <th>Categoría</th>
-                    <th>Stock</th>
-                    <th colspan="2">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Las filas se llenan con JS según el proyecto seleccionado -->
-            </tbody>
-        </table>
+    <section class="container">
+        <div class="card">
+            <h2>Lista de Insumos Almacenados</h2>
+            <div class="helper" id="helperTabla">Selecciona opciones por pasos y genera la lista.</div>
+            <table id="tablaInsumos" aria-describedby="helperTabla">
+                <thead>
+                    <tr>
+                        <th colspan="10">Lista de Materiales</th>
+                    </tr>
+                    <tr>
+                        <th>Ubicación</th>
+                        <th>Código</th>
+                        <th>Descripción</th>
+                        <th>Número de Parte</th>
+                        <th>Procedencia</th>
+                        <th>Unidad</th>
+                        <th>Categoría</th>
+                        <th>Stock</th>
+                        <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Las filas se llenan con JS según el proyecto seleccionado -->
+                </tbody>
+            </table>
+        </div>
     </section>
-
-
-
+<script src="/js/builder.js"></script>
+       
 </body>
-<script>
-
-    window.addEventListener('DOMContentLoaded', () => {
-        let listaVenturis = [];
-        let listaChasis = [];
-        let listaFiltros = [];
-
-        const obtenerVenturis = async () => {
-            try {
-                const respuesta = await fetch('http://localhost:8080/api/venturi');
-                if (!respuesta.ok) throw new Error('Error al obtener venturis');
-                listaVenturis = await respuesta.json();
-                poblarSelectVenturis();
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Ocurrió un error al obtener las capacidades del venturi.');
-            }
-        };
-
-        const poblarSelectVenturis = () => {
-            const venturiSelect = document.getElementById('capacidadVenturi');
-            venturiSelect.innerHTML = '';
-
-            const opcionDefault = document.createElement('option');
-            opcionDefault.value = '';
-            opcionDefault.textContent = 'Seleccione una capacidad del Venturi';
-            venturiSelect.appendChild(opcionDefault);
-
-            listaVenturis.forEach(venturi => {
-                const option = document.createElement('option');
-                option.value = venturi.codigo;
-                option.textContent = venturi.descripcion;
-                venturiSelect.appendChild(option);
-            });
-        };
-
-        const obtenerChasis = async () => {
-            try {
-                const respuesta = await fetch('http://localhost:8080/api/chasis');
-                if (!respuesta.ok) throw new Error('Error al obtener chasis');
-                listaChasis = await respuesta.json();
-                poblarSelectChasis();
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Ocurrió un error al obtener las capacidades del venturi.');
-            }
-        };
-
-        const poblarSelectChasis = () => {
-            const chasisSelect = document.getElementById('tipoVehiculo');
-            chasisSelect.innerHTML = '';
-
-            const opcionDefault = document.createElement('option');
-            opcionDefault.value = '';
-            opcionDefault.textContent = 'Seleccione un tipo de chasis';
-            chasisSelect.appendChild(opcionDefault);
-
-
-
-            listaChasis.forEach(chasis => {
-                const option = document.createElement('option');
-                option.value = chasis.id;
-                option.textContent = chasis.nombre;
-                chasisSelect.appendChild(option);
-            });
-        };
-
-        
-        const obtenerFiltro = async () => {
-            try {
-                const respuesta = await fetch('http://localhost:8080/api/filtros');
-                if (!respuesta.ok) throw new Error('Error al obtener filtros');
-                listaFiltros = await respuesta.json();
-                poblarSelectFiltros();
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Ocurrió un error al obtener filtros.');
-            }
-        };
-
-        const poblarSelectFiltros = () => {
-            const filtroSelect = document.getElementById('tipoFiltro');
-            filtroSelect.innerHTML = '';
-
-            const opcionDefault = document.createElement('option');
-            opcionDefault.value = '';
-            opcionDefault.textContent = 'Seleccione un filtro';
-            filtroSelect.appendChild(opcionDefault);
-
-            listaFiltros.forEach(filtro => {
-                const option = document.createElement('option');
-                option.value = filtro.codigoFiltro; // ID del filtro
-                option.textContent = filtro.nombre; // Nombre del filtro
-                filtroSelect.appendChild(option);
-            });
-        };
-
-
-
-        // Llamadas a las funciones para obtener datos al cargar la página
-
-        obtenerVenturis();
-        obtenerChasis();
-        obtenerFiltro();
-
-
-
-    });
-
-
-</script>
-
-
 
 </html>

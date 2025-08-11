@@ -1,17 +1,175 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <title>title</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inicio | App</title>
+  <style>
+    :root{--bg:#f5f7fb;--ink:#0f172a;--muted:#64748b;--line:#e2e8f0;--brand:#2563eb;--brand2:#1e40af;--card:#ffffff;--sheet:1100px}
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,"Noto Sans",sans-serif}
+
+    /* Topbar */
+    .topbar{position:sticky;top:0;background:#fff;color:var(--ink);border-bottom:1px solid var(--line);z-index:20;box-shadow:0 6px 14px rgba(15,23,42,.05)}
+    .topbar .wrap{max-width:var(--sheet);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;gap:12px}
+    .brand{display:flex;align-items:center;gap:.6rem;font-weight:800;letter-spacing:.3px}
+    .brand .logo{display:inline-block;padding:.2rem .5rem;border:1px solid var(--line);border-radius:.5rem}
+    .main-nav{display:flex;gap:.8rem;align-items:center}
+    .main-nav a{color:var(--ink);text-decoration:none;padding:.45rem .7rem;border-radius:.5rem}
+    .main-nav a:hover{background:#f3f4f6}
+
+    /* Page */
+    .page{max-width:var(--sheet);margin:20px auto;padding:0 16px}
+    .hero{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 0 16px}
+    .hero h1{margin:0;font-size:1.35rem}
+    .hero p{margin:.25rem 0 0;color:var(--muted)}
+
+    /* Grid cards */
+    .grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:16px}
+    @media(min-width:680px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(min-width:980px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    .card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 28px rgba(15,23,42,.08);padding:16px;display:flex;flex-direction:column;gap:10px}
+    .card:hover{box-shadow:0 16px 34px rgba(15,23,42,.1)}
+    .card .icon{width:36px;height:36px;border-radius:10px;background:#eff4ff;border:1px solid #dbe7ff;display:grid;place-items:center}
+    .card h3{margin:0;font-size:1.05rem}
+    .card p{margin:0;color:var(--muted)}
+    .card .actions{margin-top:8px;display:flex;gap:8px;align-items:center}
+    .btn{border:1px solid var(--line);border-radius:.6rem;padding:.5rem .85rem;font-weight:700;cursor:pointer;background:#fff;color:var(--ink);transition:transform .06s ease,box-shadow .2s ease,background .2s ease}
+    .btn:hover{box-shadow:0 6px 14px rgba(15,23,42,.08)}
+    .btn.primary{background:var(--brand);color:#fff;border-color:transparent}
+    .stretched{position:absolute;inset:0;border-radius:14px}
+    .stretched:focus{outline:3px solid rgba(37,99,235,.35)}
+    .muted{color:var(--muted)}
+
+    /* Footer */
+    footer{max-width:var(--sheet);margin:24px auto 40px;color:var(--muted);padding:0 16px}
+
+    /* Icons (inline SVG inherit currentColor) */
+    .i{display:inline-block;vertical-align:middle}
+  </style>
 </head>
 <body>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="brand"><span class="logo">App</span> <span>— Panel</span></div>
+      <nav class="main-nav" aria-label="principal">
+        <a href="/index">Inicio</a>
+        <a href="/builder">Órdenes</a>
+        <a href="/inventario">Inventario</a>
+        <a href="/config">Configuración</a>
+      </nav>
+      <div>
+        <a class="btn" href="/builder">+ Nueva OT</a>
+      </div>
+    </div>
+  </header>
 
-    <h1> test de backend</h1>
+  <main class="page">
+    <section class="hero">
+      <div>
+        <h1>¿Qué quieres hacer hoy?</h1>
+        <p>Elige una opción para continuar. Puedes crear una OT, hacer cálculos o gestionar inventario.</p>
+      </div>
+    </section>
 
+    <section class="grid" aria-label="Acciones rápidas">
+      <!-- Crear OT -->
+      <article class="card">
+        <div class="icon" aria-hidden="true">
+          <svg class="i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6"/><path d="M12 9v6"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+        </div>
+        <h3>Crear Orden de Trabajo</h3>
+        <p>Arma el proyecto por pasos y genera la lista de materiales.</p>
+        <div class="actions">
+          <a href="/builder" class="btn primary">Abrir</a>
+          <span class="muted">/builder</span>
+        </div>
+        <a href="/builder" class="stretched" aria-label="Crear Orden de Trabajo"></a>
+      </article>
 
-    <a href="/venturi_view">Ir a Venturi View</a>
+      <!-- Agregar ítem a lista -->
+      <article class="card">
+        <div class="icon" aria-hidden="true">
+          <svg class="i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+        </div>
+        <h3>Agregar ítem a lista</h3>
+        <p>Registrar un nuevo insumo o repuesto en inventario.</p>
+        <div class="actions">
+          <a href="/inventario/agregar" class="btn primary">Abrir</a>
+          <span class="muted">/inventario/agregar</span>
+        </div>
+        <a href="/inventario/agregar" class="stretched" aria-label="Agregar ítem a lista"></a>
+      </article>
 
+      <!-- Calcular Venturi -->
+      <article class="card">
+        <div class="icon" aria-hidden="true">
+          <svg class="i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18"/><path d="M7 6h10"/><path d="M7 14h10"/></svg>
+        </div>
+        <h3>Calcular Venturi</h3>
+        <p>Herramienta para dimensionar y seleccionar el venturi adecuado.</p>
+        <div class="actions">
+          <a href="/venturi_view" class="btn primary">Abrir</a>
+          <span class="muted">/venturi_view</span>
+        </div>
+        <a href="/venturi_view" class="stretched" aria-label="Calcular Venturi"></a>
+      </article>
 
+      <!-- Calcular Bomba -->
+      <article class="card">
+        <div class="icon" aria-hidden="true">
+          <svg class="i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M3 12h3"/><path d="M18 12h3"/><path d="M12 3v3"/><path d="M12 18v3"/></svg>
+        </div>
+        <h3>Calcular Bomba</h3>
+        <p>Selecciona caudal, altura y pérdida para sugerir una bomba.</p>
+        <div class="actions">
+          <a href="/calculos/bomba" class="btn primary">Abrir</a>
+          <span class="muted">/calculos/bomba</span>
+        </div>
+        <a href="/calculos/bomba" class="stretched" aria-label="Calcular Bomba"></a>
+      </article>
+
+      <!-- Distribución de peso -->
+      <article class="card">
+        <div class="icon" aria-hidden="true">
+          <svg class="i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16"/><rect x="6" y="5" width="12" height="10" rx="2"/></svg>
+        </div>
+        <h3>Distribución de peso</h3>
+        <p>Calcula el balance de masa entre ejes y verifica límites.</p>
+        <div class="actions">
+          <a href="/calculos/distribucion" class="btn primary">Abrir</a>
+          <span class="muted">/calculos/distribucion</span>
+        </div>
+        <a href="/calculos/distribucion" class="stretched" aria-label="Distribución de peso"></a>
+      </article>
+
+      <!-- Órdenes (listado) -->
+      <article class="card">
+        <div class="icon" aria-hidden="true">
+          <svg class="i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><rect x="3" y="4" width="3" height="4"/><rect x="3" y="10" width="3" height="4"/><rect x="3" y="16" width="3" height="4"/></svg>
+        </div>
+        <h3>Mis Órdenes</h3>
+        <p>Consultar, continuar o imprimir órdenes existentes.</p>
+        <div class="actions">
+          <a href="/ordenes" class="btn primary">Abrir</a>
+          <span class="muted">/ordenes</span>
+        </div>
+        <a href="/ordenes" class="stretched" aria-label="Mis Órdenes"></a>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <small>© <span id="y"></span> App — Panel de operaciones</small>
+  </footer>
+
+  <script>
+    // Enter activa las tarjetas enfocadas
+    document.querySelectorAll('.stretched').forEach(a=>{
+      a.addEventListener('keydown',e=>{ if(e.key==='Enter'){ a.click(); }});
+      a.setAttribute('tabindex','0');
+    });
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
-<script src = "/js/venturi.js"></script>
 </html>

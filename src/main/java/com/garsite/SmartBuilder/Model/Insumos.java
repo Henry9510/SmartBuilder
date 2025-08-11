@@ -17,13 +17,16 @@ public class Insumos{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo_insumo;
+    private Long id;
 
     private String numero_parte;
-    private String nombre;
-    private String procedencia;
+    private String codigoInsumo;
     private String descripcion;
     private String unidad_medida;
+    private String modelo;
+
+
+
 
 }
 

@@ -21,4 +21,11 @@ public class main {
     public String build() {
         return "builder"; 
     }
+
+    
+     @GetMapping("/inventario")
+    public String inventory() {
+        return "inventario"; 
+    }
 }
+
