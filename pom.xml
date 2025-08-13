@@ -13,7 +13,7 @@
 	<artifactId>SmartBuilder</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>SmartBuilder</name>
-	<description>l desarrollo de un carro de compra interactivo</description>
+        <description>Aplicación para gestionar proyectos y su inventario</description>
 	<url />
 	<licenses>
 		<license />
