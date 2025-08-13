@@ -26,7 +26,7 @@ public class SistemEle {
     private String tipoSensorTemp;          
     private String tipoMedidor;
     private String impresora;
-    private String moden;
+    private String modem;
 
     
 }
